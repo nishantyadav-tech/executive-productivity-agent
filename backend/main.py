@@ -15,6 +15,7 @@ Run:
 Swagger:
   http://localhost:8000/docs
 """
+
 from __future__ import annotations
 
 from dotenv import load_dotenv
@@ -29,7 +30,15 @@ from agent import qa as qa_engine  # noqa: E402
 from agent import sources as sources_engine  # noqa: E402
 from agent import tasks as task_engine  # noqa: E402
 from agent.db import build_db  # noqa: E402
-from agent.models import AskRequest, AskResponse, BriefResponse, CalendarResponse, Source, Task  # noqa: E402
+from agent.models import (
+    AskRequest,
+    AskResponse,
+    BriefResponse,
+    CalendarResponse,
+    Source,
+    Task,
+)  # noqa: E402
+
 
 app = FastAPI(
     title="Executive Productivity Agent API",
@@ -37,9 +46,14 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# CORS configuration
+# Allows both the local React frontend and the deployed Vercel frontend.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://executive-productivity-agent-theta.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
